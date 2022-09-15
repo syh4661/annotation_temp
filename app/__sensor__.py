@@ -1,16 +1,22 @@
-# from app.__sensor__ import sensor
-
 import argparse
-
+import sys
 import traceback
 
+from PIL import Image
+from PIL import ImageTk
+from PIL import ImageQt
 
 
+from .app import Application
 
 
+def new_excepthook(type, value, tb):
+    # by default, Qt does not seem to output any errors, this prevents that
+    traceback.print_exception(type, value, tb)
 
 
-#
+sys.excepthook = new_excepthook
+
 
 # VIEW MODE CHECK
 VIEW_MODE = True
@@ -31,44 +37,32 @@ class VISION_STATE:
 
 CUR_VISION_STATE = VISION_STATE.WAIT_INIT
 
+'''
+pyqt imaging
 
-# def new_excepthook(type, value, tb):
-#     # by default, Qt does not seem to output any errors, this prevents that
-#     traceback.print_exception(type, value, tb)
-#
-#
-# sys.excepthook = new_excepthook
+qimage = ImageQt.ImageQt(img).copy()
+pixmap = QtGui.QPixmap.fromImage(qimage)
+label = QtWidgets.QLabel()
+label.setPixmap(pixmap)
 
 
-# def main():
-from PIL import Image, ImageQt
-#
-# qimage = ImageQt.ImageQt(img).copy()
-# pixmap = QtGui.QPixmap.fromImage(qimage)
-# label = QtWidgets.QLabel()
-# label.setPixmap(pixmap)
+'''
 def showUIImg(cam, Label, size):
     if (cam != []):
         # cam_color_ = copy.deepcopy(cam)
         # cam_color_ = cv2.resize(cam_color_, size)
 
         # image = Image.fromarray(cam_color_)
-
         image = Image.fromarray(cv2.resize(cam, size))
-        # image = ImageQt.PhotoImage(image)
-        #
-        # if Label is None:
-        #     Label = tk.Label(image=image)
-        #     Label.image = image
-        #     Label.pack(side="left")
-        # else:
-        #     Label.configure(image=image)
-        #     Label.image = image
+        image = ImageQT.PhotoImage(image)
 
-        qimage = ImageQt.ImageQt(image).copy()
-        pixmap = QtGui.QPixmap.fromImage(qimage)
-        # label = QtWidgets.QLabel()
-        Label.setPixmap(pixmap)
+        if Label is None:
+            Label = tk.Label(image=image)
+            Label.image = image
+            Label.pack(side="left")
+        else:
+            Label.configure(image=image)
+            Label.image = image
 
 def sensor():
 
@@ -76,10 +70,7 @@ def sensor():
 
     global rgb, depth, result, ws_pts
     import cv2
-    from app.sensors.realsense_sensor import RSSensor
-
-
-
+    from .sensors.realsense_sensor import RSSensor
     import numpy as np
     # get data from realsene
     sensor = RSSensor()
@@ -115,14 +106,14 @@ def sensor():
                                        color=(255, 0, 0))
                 display_rgb = cv2.polylines(display_rgb, [ws_pts_copy], True, (0, 255, 0), 2)
 
+                print("vars : ",globals())
+                # showUIImg(display_rgb, , (480, 360))
 
-                showUIImg(display_rgb, gui.rgb_frame, (970, 730))
-
-                display_depth = copy.deepcopy(depth)[:, IMAGE_CROP_FOR_UI:-IMAGE_CROP_FOR_UI]
-                display_depth = display_depth.astype(np.uint8)
-                display_depth = cv2.applyColorMap(display_depth, cv2.COLORMAP_JET)
-                display_depth = cv2.polylines(display_depth, [ws_pts_copy], True, (0, 255, 0), 2)
-                showUIImg(display_depth, gui.depth_frame, (970, 730))
+                # display_depth = copy.deepcopy(depth)[:, IMAGE_CROP_FOR_UI:-IMAGE_CROP_FOR_UI]
+                # display_depth = display_depth.astype(np.uint8)
+                # display_depth = cv2.applyColorMap(display_depth, cv2.COLORMAP_JET)
+                # display_depth = cv2.polylines(display_depth, [ws_pts_copy], True, (0, 255, 0), 2)
+                # showUIImg(display_depth, ui_top.Label3, (480, 360))
 
             if CUR_VISION_STATE == VISION_STATE.SET_VISION_ROI:
                 if ws_pts.__len__() > 0:
@@ -137,37 +128,7 @@ def sensor():
                     display_rgb = cv2.polylines(display_rgb, [ws_pts_copy], True, (0, 255, 0), 2)
 
                 showUIImg(display_rgb, ui_top.Label1, (970, 730))
-print("foo")
+
+
 if __name__ == '__main__':
-
-    # parser = argparse.ArgumentParser()
-    # parser.add_argument('--no-gui', action='store_true')
-    # args = parser.parse_args()
-
-    # app = Application()
-    import sys
-
-    print("foo2")
-
-    from PyQt5.QtWidgets import QApplication
-    from PyQt5 import QtGui
-    from app.gui import MainWindow
-
-    print("foo4")
-    qapp = QApplication(sys.argv)
-    import cv2
-    print("hi")
-
-    gui = MainWindow()
-    print("hi")
-    gui.show()
-    import threading
-
-    sensor_thread = threading.Thread(target=sensor)
-    sensor_thread.daemon = True
-    sensor_thread.start()
-
-    sys.exit(qapp.exec_())
-
-
-    # show_log('Main >> Sensor Started')
+    main()

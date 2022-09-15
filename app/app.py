@@ -15,3 +15,12 @@ class Application(object):
         print(text)
         print("End")
         return text
+
+    def capture(self, sleep):
+        print("Start")
+        with open(self.file_path) as file:
+            text = file.read()
+        time.sleep(sleep)
+        print(text)
+        print("End")
+        return text

@@ -2,6 +2,7 @@ import argparse
 import sys
 import traceback
 
+
 from .app import Application
 
 
@@ -26,7 +27,10 @@ def main():
         from PyQt5.QtWidgets import QApplication
         from .gui import MainWindow
         qapp = QApplication(sys.argv)
+
+
         gui = MainWindow(app)
+
         gui.show()
         sys.exit(qapp.exec_())
 
