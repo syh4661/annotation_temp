@@ -42,7 +42,7 @@ class RSSensor(Sensor):
         self.intr_params = self.get_intrinsic_params(profile)
         print(f'Camera {device_serial} with intrinsic params:')
         print(self.intr_params)
-
+        print("size : ",size)
 
 
         print('sensor initialized ... ')

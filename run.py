@@ -15,7 +15,7 @@ import traceback
 # VIEW MODE CHECK
 VIEW_MODE = True
 RESULT_SAVE_MODE = False
-IMAGE_CROP_FOR_UI = 160
+IMAGE_CROP_FOR_UI = 1
 
 ws_pts = []
 
@@ -47,14 +47,16 @@ from PIL import Image, ImageQt
 # pixmap = QtGui.QPixmap.fromImage(qimage)
 # label = QtWidgets.QLabel()
 # label.setPixmap(pixmap)
-def showUIImg(cam, Label, size):
+def showUIImg(cam, Label, size=None):
     if (cam != []):
         # cam_color_ = copy.deepcopy(cam)
         # cam_color_ = cv2.resize(cam_color_, size)
 
         # image = Image.fromarray(cam_color_)
-
-        image = Image.fromarray(cv2.resize(cam, size))
+        if size == None:
+            image = Image.fromarray(cam)
+        else:
+            image = Image.fromarray(cv2.resize(cam, size))
         # image = ImageQt.PhotoImage(image)
         #
         # if Label is None:
@@ -69,7 +71,8 @@ def showUIImg(cam, Label, size):
         pixmap = QtGui.QPixmap.fromImage(qimage)
         # label = QtWidgets.QLabel()
         Label.setPixmap(pixmap)
-
+        # setScaledContents [칸에 맞게 이미지 조정]
+        Label.setScaledContents(True)
 def sensor():
 
     import copy
@@ -116,14 +119,17 @@ def sensor():
                 display_rgb = cv2.polylines(display_rgb, [ws_pts_copy], True, (0, 255, 0), 2)
 
 
-                showUIImg(display_rgb, gui.rgb_frame, (970, 730))
+                # showUIImg(display_rgb, gui.rgb_frame, (1280, 720))
+                showUIImg(display_rgb, gui.rgb_frame, (640, 360))
+                # showUIImg(display_rgb, gui.rgb_frame)
 
                 display_depth = copy.deepcopy(depth)[:, IMAGE_CROP_FOR_UI:-IMAGE_CROP_FOR_UI]
                 display_depth = display_depth.astype(np.uint8)
                 display_depth = cv2.applyColorMap(display_depth, cv2.COLORMAP_JET)
                 display_depth = cv2.polylines(display_depth, [ws_pts_copy], True, (0, 255, 0), 2)
-                showUIImg(display_depth, gui.depth_frame, (970, 730))
-
+                # showUIImg(display_depth, gui.depth_frame)
+                showUIImg(display_depth, gui.depth_frame, (640, 360))
+                # showUIImg(display_depth, gui.depth_frame, (1280, 720))
             if CUR_VISION_STATE == VISION_STATE.SET_VISION_ROI:
                 if ws_pts.__len__() > 0:
                     for pts in ws_pts:

@@ -18,17 +18,26 @@ from PyQt5.QtWidgets import *
 # -*- coding: utf-8 -*-
 
 
+# -*- coding: utf-8 -*-
+
+################################################################################
+## Form generated from reading UI file 'mainYfnQZi.ui'
+##
+## Created by: Qt User Interface Compiler version 5.15.2
+##
+## WARNING! All changes made in this file will be lost when recompiling UI file!
+################################################################################
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1580, 1264)
+        MainWindow.resize(877, 814)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.verticalLayoutWidget = QWidget(self.centralwidget)
         self.verticalLayoutWidget.setObjectName(u"verticalLayoutWidget")
-        self.verticalLayoutWidget.setGeometry(QRect(10, 10, 1221, 1191))
+        self.verticalLayoutWidget.setGeometry(QRect(10, 10, 651, 741))
         self.sensors = QVBoxLayout(self.verticalLayoutWidget)
         self.sensors.setObjectName(u"sensors")
         self.sensors.setContentsMargins(0, 0, 0, 0)
@@ -45,7 +54,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayoutWidget_2 = QWidget(self.centralwidget)
         self.verticalLayoutWidget_2.setObjectName(u"verticalLayoutWidget_2")
-        self.verticalLayoutWidget_2.setGeometry(QRect(1320, 100, 160, 171))
+        self.verticalLayoutWidget_2.setGeometry(QRect(700, 20, 160, 171))
         self.bottons = QVBoxLayout(self.verticalLayoutWidget_2)
         self.bottons.setObjectName(u"bottons")
         self.bottons.setContentsMargins(0, 0, 0, 0)
@@ -67,7 +76,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 1580, 20))
+        self.menubar.setGeometry(QRect(0, 0, 877, 20))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
@@ -90,7 +99,6 @@ class Ui_MainWindow(object):
         self.btn_thebutton_3.setText(QCoreApplication.translate("MainWindow", u"2", None))
         self.toolBar.setWindowTitle(QCoreApplication.translate("MainWindow", u"toolBar", None))
     # retranslateUi
-
 
 
 
